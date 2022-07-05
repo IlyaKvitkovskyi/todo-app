@@ -12,6 +12,7 @@ const AddButtonList = ({ colors, onAdd }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [selectedColor, selectColor] = useState(3);
   const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (Array.isArray(colors)) {
@@ -30,6 +31,7 @@ const AddButtonList = ({ colors, onAdd }) => {
       alert('Введите название списка');
       return;
     }
+    setIsLoading(true);
     axios
       .post('http://localhost:3001/lists', {
         name: inputValue,
@@ -39,8 +41,10 @@ const AddButtonList = ({ colors, onAdd }) => {
         const color = colors.filter((c) => c.id === selectedColor)[0].name;
         const listObj = { ...data, color: { name: color } };
         onAdd(listObj);
+        onClose();
+      }).finally(() => {
+        setIsLoading(false);
       });
-    onClose();
   };
 
   return (
@@ -106,7 +110,7 @@ const AddButtonList = ({ colors, onAdd }) => {
             ))}
           </div>
           <button onClick={addList} className="button">
-            Добавить
+            {isLoading ? 'Добавление...' : 'Добавить'}
           </button>
         </div>
       )}
