@@ -28,12 +28,13 @@
 
   &__form {
     margin-top: 20px;
+    
     &-new {
       display: flex;
       align-items: center;
       cursor: pointer;
       opacity: 0.4;
-      transition: opacity .2s ease-in-out;
+      transition: opacity .15s ease-in-out;
 
       &:hover {
         opacity: 0.8;

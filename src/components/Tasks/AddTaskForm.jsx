@@ -1,14 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 import addSvg from '../../assets/img/add.svg';
 
-const AddTaskForm = () => {
+const AddTaskForm = ({ list, onAddTask }) => {
+  const [visibleForm, setFormVisible] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState('');
+
+  const toggleFormVisible = () => {
+    setFormVisible(!visibleForm);
+    setInputValue('');
+  };
+
+  const addTask = () => {
+    const obj = {
+      listId: list.id,
+      text: inputValue,
+      completed: false,
+    };
+    setIsLoading(true);
+    axios
+      .post('http://localhost:3001/tasks', obj)
+      .then(({ data }) => {
+        onAddTask(list.id, data);
+        toggleFormVisible();
+      })
+      .catch(() => {
+        alert('Ошибка при добавлении задачи!');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   return (
     <div className="tasks__form">
-      <div className="tasks__form-new">
-        <img src={addSvg} alt="Add Icon" />
-        <span>Новая задача</span>
-      </div>
+      {!visibleForm ? (
+        <div onClick={toggleFormVisible} className="tasks__form-new">
+          <img src={addSvg} alt="Add Icon" />
+          <span>Новая задача</span>
+        </div>
+      ) : (
+        <div className="task__form-block">
+          <input
+            value={inputValue}
+            className="field"
+            type="text"
+            placeholder="Текст задачи"
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+          <button disabled={isLoading} onClick={addTask} className="btns button">
+            {isLoading ? 'Добавление...' : 'Добавить задачу'}
+          </button>
+          <button onClick={toggleFormVisible} className="btns button button--grey">
+            Отмена
+          </button>
+        </div>
+      )}
     </div>
   );
 };
