@@ -31,7 +31,7 @@
       "id": 1,
       "listId": 2,
       "text": "Изучить JavaScript",
-      "completed": true
+      "completed": false
     },
     {
       "id": 2,
@@ -43,7 +43,7 @@
       "id": 3,
       "listId": 2,
       "text": "ReactJS Hooks (useState, useReducer, useEffect и т.д.)",
-      "completed": true
+      "completed": false
     },
     {
       "id": 4,
@@ -54,8 +54,20 @@
     {
       "listId": 4,
       "text": "Купить 1984!",
-      "completed": true,
+      "completed": false,
       "id": 10
+    },
+    {
+      "listId": 1,
+      "text": "Продать Кеды",
+      "completed": false,
+      "id": 11
+    },
+    {
+      "listId": 5,
+      "text": "Почитать вечером книгу 1984!",
+      "completed": false,
+      "id": 12
     }
   ],
   "colors": [
